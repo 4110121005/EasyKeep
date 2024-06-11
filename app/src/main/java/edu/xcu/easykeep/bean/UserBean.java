@@ -1,9 +1,14 @@
 package edu.xcu.easykeep.bean;
 
-public class User {
+public class UserBean {
     private String uid;
     private String upassword;
     private String uname;
+
+    public UserBean(String uid, String upassword) {
+        this.uid = uid;
+        this.upassword = upassword;
+    }
 
     public String getUid() {
         return uid;

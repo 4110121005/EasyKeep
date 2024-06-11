@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.xcu.easykeep.R;
+import edu.xcu.easykeep.bean.UserBean;
 import edu.xcu.easykeep.databinding.ActivityRegisterBinding;
-import edu.xcu.easykeep.db.UserDBHelper;
+import edu.xcu.easykeep.db.UserDBManger;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserDBHelper userDbHelper = new UserDBHelper(getApplicationContext());
+                UserDBManger userDBManger = new UserDBManger(getApplicationContext());
 
                 final String upassword = etRegisterPass.getText().toString();
                 final String checkPass = etCheckPass.getText().toString();
@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                     });
                 }
                 else{
-                    int result = userDbHelper.userRegister(uid, upassword);
+                    int result = userDBManger.userRegister(new UserBean(uid, upassword));
                     if (result == 1) {
                         Toast.makeText(getApplicationContext(),  "注册成功", Toast.LENGTH_SHORT).show();
                     } else if (result == 0) {

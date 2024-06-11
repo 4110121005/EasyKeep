@@ -1,5 +1,6 @@
 package edu.xcu.easykeep.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,6 +19,7 @@ import edu.xcu.easykeep.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
             // 将底部导航栏与 navController 关联，实现点击导航
             NavigationUI.setupWithNavController(navView, navController);
         }
+
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
     }
 
 }
