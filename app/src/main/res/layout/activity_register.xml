@@ -1,0 +1,156 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="10dp">
+
+        <TextView
+            android:id="@+id/tv_registerLogo"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/register_logo"
+            android:gravity="center"
+            android:textColor="#FFEB3B" />
+
+        <TextView
+            android:id="@+id/tv_registerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="-10dp"
+            android:gravity="center"
+            android:text="@string/register_title"
+            android:textColor="#0C6BC2"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:id="@+id/tv_registerUid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/text_uid"
+                android:textColor="#0C6BC2"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_registerUid"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints="username"
+                android:ems="10"
+                android:hint="@string/hint_uid"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:id="@+id/tv_registerPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/text_password"
+                android:textColor="#0C6BC2"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_registerPass"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints="password"
+                android:ems="10"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:id="@+id/tv_checkPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_check_password"
+                android:textColor="#0C6BC2"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_checkPass"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:autofillHints="password"
+                android:ems="10"
+                android:hint="@string/hint_check_password"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/iv_warn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-30dp"
+                android:contentDescription="@string/warn_description"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_check_warn_30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="60dp">
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="260dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/register_button"
+                android:textSize="18sp"
+                app:backgroundTint="#1C8DE6"
+                app:cornerRadius="50dp" />
+
+            <Button
+                android:id="@+id/btn_gotoLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/goto_login"
+                android:textColor="#737171" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
