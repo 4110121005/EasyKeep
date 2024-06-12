@@ -7,7 +7,7 @@ public class BillBean {
     private float money;//价格
     private String time;//时钟和分钟字符串
     private int year, month, day;
-    private int kind;//类型，收入1、支出-1、不计入收支0
+    private int kind;//类型，收入1、支出-1
 
     public BillBean(int id, String name, String note, float money, String time, int year, int month, int day, int kind) {
         this.id = id;

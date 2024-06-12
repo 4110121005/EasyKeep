@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //创建类型表
         createTypeTable(db);
-//        insertType(db);
+        insertType(db);
     }
 
     @Override
@@ -62,44 +62,40 @@ public class DBHelper extends SQLiteOpenHelper {
     /*
     * 向 type 表当中插入元素
     * */
-//    private void insertType(SQLiteDatabase db){
-//        String sql = "insert into type(name, imageId, selected, kind) values (?, ?, ?, ?)";
-//
-//        //支出
-//        db.execSQL(sql, new Object[]{"飞来横祸，嘤嘤嘤", R.drawable.ic_type_angry, R.drawable.ic_type_angry_green, -1});
-//
-//        db.execSQL(sql, new Object[]{"餐饮", R.mipmap.ic_canyin,R.mipmap.ic_canyin_fs,0});
-//        db.execSQL(sql, new Object[]{"交通", R.mipmap.ic_jiaotong,R.mipmap.ic_jiaotong_fs,0});
-//        db.execSQL(sql, new Object[]{"服饰", R.mipmap.ic_fushi,R.mipmap.ic_fushi_fs,0});
-//        db.execSQL(sql, new Object[]{"购物", R.mipmap.ic_gouwu,R.mipmap.ic_gouwu_fs,0});
-//        db.execSQL(sql, new Object[]{"服务", R.mipmap.ic_gouwu,R.mipmap.ic_gouwu_fs,0});
-//        db.execSQL(sql, new Object[]{"教育", R.mipmap.ic_gouwu,R.mipmap.ic_gouwu_fs,0});
-//
-//        db.execSQL(sql, new Object[]{"娱乐", R.mipmap.ic_yule,R.mipmap.ic_yule_fs,0});
-//        db.execSQL(sql, new Object[]{"运动", R.mipmap.ic_lingshi,R.mipmap.ic_lingshi_fs,0});
-//        db.execSQL(sql, new Object[]{"生活缴费", R.mipmap.ic_yanjiu,R.mipmap.ic_yanjiu_fs,0});
-//        db.execSQL(sql, new Object[]{"旅行", R.mipmap.ic_xuexi,R.mipmap.ic_xuexi_fs,0});
-//        db.execSQL(sql, new Object[]{"宠物", R.mipmap.ic_xuexi,R.mipmap.ic_xuexi_fs,0});
-//        db.execSQL(sql, new Object[]{"医疗", R.mipmap.ic_yiliao,R.mipmap.ic_yiliao_fs,0});
-//
-//        db.execSQL(sql, new Object[]{"保险", R.mipmap.ic_zhufang,R.mipmap.ic_zhufang_fs,0});
-//        db.execSQL(sql, new Object[]{"公益", R.mipmap.ic_shuidianfei,R.mipmap.ic_shuidianfei_fs,0});
-//        db.execSQL(sql, new Object[]{"发红包", R.mipmap.ic_tongxun,R.mipmap.ic_tongxun_fs,0});
-//        db.execSQL(sql, new Object[]{"转账", R.mipmap.ic_tongxun,R.mipmap.ic_tongxun_fs,0});
-//        db.execSQL(sql, new Object[]{"人情往来", R.mipmap.ic_renqingwanglai,R.mipmap.ic_renqingwanglai_fs,0});
-//        db.execSQL(sql, new Object[]{"其他", R.mipmap.in_qt,R.mipmap.in_qt_fs,0});
-//
-//        //支出
-//        db.execSQL(sql, new Object[]{"天降横财，嘿嘿嘿", R.mipmap.in_yiwai,R.mipmap.in_yiwai_fs,1});
-//        db.execSQL(sql, new Object[]{"交易", R.mipmap.in_xinzi,R.mipmap.in_xinzi_fs,1});
-//        db.execSQL(sql, new Object[]{"工资", R.mipmap.in_xinzi,R.mipmap.in_xinzi_fs,1});
-//        db.execSQL(sql, new Object[]{"奖金", R.mipmap.in_jiangjin,R.mipmap.in_jiangjin_fs,1});
-//        db.execSQL(sql, new Object[]{"人情往来", R.mipmap.in_jieru,R.mipmap.in_jieru_fs,1});
-//        db.execSQL(sql, new Object[]{"收红包", R.mipmap.in_shouzhai,R.mipmap.in_shouzhai_fs,1});
-//        db.execSQL(sql, new Object[]{"利息收入", R.mipmap.in_lixifuji,R.mipmap.in_lixifuji_fs,1});
-//        db.execSQL(sql, new Object[]{"投资回报", R.mipmap.in_touzi,R.mipmap.in_touzi_fs,1});
-//        db.execSQL(sql, new Object[]{"其他", R.mipmap.in_yiwai,R.mipmap.in_yiwai_fs,1});
-//    }
+    private void insertType(SQLiteDatabase db){
+        String sql = "insert into type(name, imageId, selected, kind) values (?, ?, ?, ?)";
+
+        //支出
+        db.execSQL(sql, new Object[]{"飞来横祸，嘤嘤嘤", R.drawable.ic_type_angry, R.drawable.ic_type_angry_green, -1});
+
+        db.execSQL(sql, new Object[]{"餐饮", R.drawable.ic_type_catering, R.drawable.ic_type_catering_green, -1});
+        db.execSQL(sql, new Object[]{"交通", R.drawable.ic_type_traffic,  R.drawable.ic_type_traffic_green, -1});
+        db.execSQL(sql, new Object[]{"服饰", R.drawable.ic_type_clothes, R.drawable.ic_type_clothes_green, -1});
+        db.execSQL(sql, new Object[]{"购物", R.drawable.ic_type_shopping, R.drawable.ic_type_shopping_green, -1});
+        db.execSQL(sql, new Object[]{"服务", R.drawable.ic_type_service, R.drawable.ic_type_service_green, -1});
+        db.execSQL(sql, new Object[]{"教育", R.drawable.ic_type_education, R.drawable.ic_type_education_green, -1});
+
+        db.execSQL(sql, new Object[]{"娱乐", R.drawable.ic_type_recreation, R.drawable.ic_type_recreation, -1});
+        db.execSQL(sql, new Object[]{"运动", R.drawable.ic_type_exercise, R.drawable.ic_type_exercise_green, -1});
+        db.execSQL(sql, new Object[]{"生活缴费", R.drawable.ic_type_living, R.drawable.ic_type_living_green, -1});
+        db.execSQL(sql, new Object[]{"旅行", R.drawable.ic_type_travel, R.drawable.ic_type_travel_green, -1});
+        db.execSQL(sql, new Object[]{"宠物", R.drawable.ic_type_pet, R.drawable.ic_type_pet_green, -1});
+        db.execSQL(sql, new Object[]{"医疗", R.drawable.ic_type_medical, R.drawable.ic_type_medical_green, -1});
+
+        db.execSQL(sql, new Object[]{"保险", R.drawable.ic_type_insure, R.drawable.ic_type_insure_green, -1});
+        db.execSQL(sql, new Object[]{"公益", R.drawable.ic_type_public, R.drawable.ic_type_public_green, -1});
+
+        //收入
+        db.execSQL(sql, new Object[]{"天降横财，鹅鹅鹅", R.drawable.ic_type_happy, R.drawable.ic_type_happy_green, 1});
+        db.execSQL(sql, new Object[]{"交易", R.drawable.ic_type_transaction, R.drawable.ic_type_transaction_green, 1});
+        db.execSQL(sql, new Object[]{"工资", R.drawable.ic_type_salary, R.drawable.ic_type_salary_green, 1});
+        db.execSQL(sql, new Object[]{"奖金", R.drawable.ic_type_bonus, R.drawable.ic_type_bonus_green, 1});
+
+        //收入或支出
+        db.execSQL(sql, new Object[]{"其他", R.drawable.ic_type_rests, R.drawable.ic_type_rests_green, 0});
+        db.execSQL(sql, new Object[]{"理财", R.drawable.ic_type_management, R.drawable.ic_type_management_green, 0});
+        db.execSQL(sql, new Object[]{"人情往来", R.drawable.ic_type_relation, R.drawable.ic_type_relation_green, 0});
+    }
 
     /*
     * 向 user表添加初始用户，便于前期开发

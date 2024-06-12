@@ -5,7 +5,7 @@ public class TypeBean {
     private String name;//类型名称
     private int imageId;//该类型对应的图片 id，该 id 就是图片的资源 id
     private int selected;//选中后，图片的 id
-    private int kind;//表示该类型属于收入还是支出，或是不计入收支
+    private int kind;//表示该类型属于收入还是支出
 
     public TypeBean(int id, String name, int imageId, int selected, int kind) {
         this.id = id;
