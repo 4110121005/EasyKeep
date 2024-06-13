@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else{
                     int result = userDBManger.userRegister(new UserBean(uid, upassword));
+                    userDBManger.close();
                     if (result == 1) {
                         Toast.makeText(getApplicationContext(),  "注册成功", Toast.LENGTH_SHORT).show();
                     } else if (result == 0) {

@@ -1,10 +1,25 @@
 package edu.xcu.easykeep.bean;
 
+/**
+ * 用户信息实体类
+ * 用于封装用户信息
+ */
 public class UserBean {
+    /**
+     * 用户ID
+     */
     private String uid;
+    /**
+     * 用户密码
+     */
     private String upassword;
-    private String uname;
 
+    /**
+     * 构造函数
+     *
+     * @param uid       用户ID
+     * @param upassword 用户密码
+     */
     public UserBean(String uid, String upassword) {
         this.uid = uid;
         this.upassword = upassword;
@@ -24,13 +39,5 @@ public class UserBean {
 
     public void setUpassword(String upassword) {
         this.upassword = upassword;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
     }
 }

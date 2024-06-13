@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 int result = userDBManger.userLogin(new UserBean(uid, upassword));
+                userDBManger.close();
                 if (result == 1) {
                     Toast.makeText(getApplicationContext(), "用户" + uid + "登录成功", Toast.LENGTH_SHORT).show();
 

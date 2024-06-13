@@ -1,14 +1,68 @@
 package edu.xcu.easykeep.bean;
 
+/**
+ * 账单数据模型，用于存储账单相关信息。
+ */
 public class BillBean {
-    private int id;//账单id
-    private String name;//账单类型，饮食、旅游...该类型会有专门的实体类。
-    private String note;//备注
-    private float money;//价格
-    private String time;//时钟和分钟字符串
-    private int year, month, day;
-    private int kind;//类型，收入1、支出-1
 
+    /**
+     * 账单 ID。
+     */
+    private int id;
+
+    /**
+     * 账单类型，例如饮食、旅游等。
+     */
+    private String name;
+
+    /**
+     * 账单备注信息。
+     */
+    private String note;
+
+    /**
+     * 账单金额。
+     */
+    private float money;
+
+    /**
+     * 账单时间，格式为 "HH:mm" 的字符串。
+     */
+    private String time;
+
+    /**
+     * 账单年份。
+     */
+    private int year;
+
+    /**
+     * 账单月份。
+     */
+    private int month;
+
+    /**
+     * 账单日期。
+     */
+    private int day;
+
+    /**
+     * 账单类型，1 表示收入，-1 表示支出。
+     */
+    private int kind;
+
+    /**
+     * 构造函数，用于创建 BillBean 对象。
+     *
+     * @param id    账单 ID
+     * @param name  账单类型
+     * @param note  账单备注
+     * @param money 账单金额
+     * @param time  账单时间
+     * @param year  账单年份
+     * @param month 账单月份
+     * @param day   账单日期
+     * @param kind  账单类型
+     */
     public BillBean(int id, String name, String note, float money, String time, int year, int month, int day, int kind) {
         this.id = id;
         this.name = name;

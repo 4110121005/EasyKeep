@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = binding.navView;
-
         //先找到 navHostfragment
         NavHostFragment navHostfragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         //再根据 navHostfragment 找到 navController

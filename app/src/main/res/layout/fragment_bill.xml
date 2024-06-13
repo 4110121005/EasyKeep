@@ -2,35 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
     <!-- 顶部标题栏 -->
     <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="记账明细"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="16dp"/>
+        android:id="@+id/tv_setting"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/green"
+        android:gravity="center"
+        android:scrollbarStyle="outsideOverlay"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
     <!-- 明细列表 -->
     <ListView
-        android:id="@+id/detail_list"
+        android:id="@+id/bill_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:fadeScrollbars="true"
+        android:padding="10dp"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbarSize="2dp"
+        android:scrollbarStyle="outsideOverlay" />
 
-    <!-- 底部添加明细按钮 -->
-    <Button
-        android:id="@+id/add_detail_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="添加明细"
-        android:layout_marginTop="16dp"
-        android:background="?attr/selectableItemBackground"
-        android:textColor="@android:color/white" />
 
 </LinearLayout>
