@@ -89,40 +89,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp">
-
-            <TextView
-                android:id="@+id/tv_checkPass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_check_password"
-                android:textColor="#0C6BC2"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/et_checkPass"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:autofillHints="password"
-                android:ems="10"
-                android:hint="@string/hint_check_password"
-                android:inputType="textPassword" />
-
-            <ImageView
-                android:id="@+id/iv_warn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-30dp"
-                android:contentDescription="@string/warn_description"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_check_warn_30dp" />
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

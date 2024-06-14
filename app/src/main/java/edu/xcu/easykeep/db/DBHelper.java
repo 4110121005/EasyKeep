@@ -1,30 +1,70 @@
 package edu.xcu.easykeep.db;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.Calendar;
+import java.util.Random;
+
 import edu.xcu.easykeep.R;
 
 /**
- * EasyKeep 数据库帮助类，用于创建和管理数据库
+ * 数据库帮助类，用于管理数据库连接，并提供获取数据库连接的单例方法。
  */
 public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * 数据库名称
      */
-    private static final String DB_NAME = "EasyKeep.db";
+    private static final String DB_NAME = "EasyKeep.db"; // 数据库文件名
+    private static final int DB_VERSION = 3; // 数据库版本号
+
+    private static DBHelper instance; // 单例实例
+    private static SQLiteDatabase db; // 数据库连接对象
 
     /**
-     * 构造函数
+     * 私有构造函数，防止外部实例化。
      *
      * @param context 上下文对象
      */
-    public DBHelper(@Nullable Context context) {
-        super(context, DB_NAME, null, 3);
+    private DBHelper(@Nullable Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+    }
+
+    /**
+     * 获取数据库帮助类的单例实例。
+     *
+     * @param context 上下文对象
+     * @return 数据库帮助类的单例实例
+     */
+    public static synchronized DBHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new DBHelper(context.getApplicationContext());
+            db = instance.getWritableDatabase();
+        }
+        return instance;
+    }
+
+    /**
+     * 获取数据库连接对象。
+     *
+     * @return 数据库连接对象
+     */
+    public SQLiteDatabase getDB() {
+        return db;
+    }
+
+    /**
+     * 关闭数据库连接。
+     */
+    public void closeDB() {
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
     }
 
     /**
@@ -46,6 +86,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // 创建账单表
         createBillTable(db);
+        // 插入初始账单数据
+        insertBill(db);
     }
 
     /**
@@ -128,7 +170,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * 向用户表插入初始用户数据
+     * 向用户表为 root 用户插入初始用户数据
      *
      * @param db SQLiteDatabase 对象
      */
@@ -137,6 +179,45 @@ public class DBHelper extends SQLiteOpenHelper {
         String upassword = "0";
         String sql = "insert into user values(?,?)";
         db.execSQL(sql, new Object[]{uid, upassword});
+    }
+
+    /**
+     * 向账单表插入初始账单数据
+     *
+     * @param db SQLiteDatabase 对象
+     */
+    private void insertBill(SQLiteDatabase db) {
+        String sql = "INSERT INTO bill (uid, name, note, money, time, year, month, day, kind) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        Random random = new Random();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2023, Calendar.JANUARY, 1); // 设置起始日期为2023年1月1日
+
+        String[] names = {"餐饮", "服饰", "购物", "旅行", "交通", "交通", "娱乐", "购物", "生活缴费", "生活缴费", "工资", "奖金"};
+        String[] notes = {"", "好吃", "好贵", "人多", "方便", "快", "好看", "漂亮", "贵", "便宜", "努力", "开心"};
+        int[] kinds = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1}; // -1: 支出, 1: 收入
+
+        for (int i = 0; i < 20; i++) {
+            int nameIndex = random.nextInt(names.length);
+            int noteIndex = random.nextInt(notes.length);
+            int kind = kinds[nameIndex];
+            float money = random.nextFloat() * 100;
+
+            calendar.add(Calendar.DAY_OF_MONTH, random.nextInt(3)); // 随机增加1-3天
+
+            @SuppressLint("DefaultLocale") String time = String.format("%d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+
+            db.execSQL(sql, new Object[]{
+                    "0",
+                    names[nameIndex],
+                    notes[noteIndex],
+                    money,
+                    time,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH) + 1,
+                    calendar.get(Calendar.DAY_OF_MONTH),
+                    kind
+            });
+        }
     }
 
     /**

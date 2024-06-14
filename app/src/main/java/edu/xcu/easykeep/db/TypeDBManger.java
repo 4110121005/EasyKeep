@@ -14,7 +14,6 @@ import edu.xcu.easykeep.bean.TypeBean;
  */
 public class TypeDBManger {
     private final SQLiteDatabase db;
-    private final DBHelper dbHelper;
 
     /**
      * 构造函数
@@ -22,7 +21,7 @@ public class TypeDBManger {
      * @param context 上下文对象
      */
     public TypeDBManger(Context context) {
-        dbHelper = new DBHelper(context);
+        DBHelper dbHelper = DBHelper.getInstance(context);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -73,17 +72,5 @@ public class TypeDBManger {
         }
         cursor.close();
         return selected;
-    }
-
-    /**
-     * 关闭数据库连接
-     */
-    public void close() {
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
-        if (dbHelper != null) {
-            dbHelper.close();
-        }
     }
 }

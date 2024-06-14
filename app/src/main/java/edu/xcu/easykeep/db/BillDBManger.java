@@ -15,7 +15,6 @@ import edu.xcu.easykeep.bean.BillBean;
  */
 public class BillDBManger {
     private final SQLiteDatabase db;
-    private final DBHelper dbHelper;
 
     /**
      * 构造函数
@@ -23,7 +22,7 @@ public class BillDBManger {
      * @param context 上下文对象
      */
     public BillDBManger(Context context) {
-        dbHelper = new DBHelper(context);
+        DBHelper dbHelper = DBHelper.getInstance(context);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -278,18 +277,6 @@ public class BillDBManger {
     public void deleteAllBill() {
         String sql = "delete from bill";
         db.execSQL(sql);
-    }
-
-    /**
-     * 关闭数据库连接
-     */
-    public void close() {
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
-        if (dbHelper != null) {
-            dbHelper.close();
-        }
     }
 }
 

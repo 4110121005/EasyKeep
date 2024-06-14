@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">随手记</string>
+    <!-- 启动界面 -->
+    <string name="title_welcome">先赚他一个小目标！</string>
     <!-- 登录界面 -->
     <string name="login_title">用户登录</string>
     <string name="hint_uid">请输入您的用户名</string>
@@ -10,11 +12,8 @@
     <string name="goto_register">还没有账号？前去注册</string>
     <!-- 注册界面  -->
     <string name="register_title">注册账号</string>
-    <string name="hint_check_password">请再次输入您的密码</string>
     <string name="text_uid">账&#8195;号：</string>
     <string name="text_password">密&#8195;码：</string>
-    <string name="text_check_password">确认密码：</string>
-    <string name="warn_description"> ! </string>
     <string name="register_button">注册</string>
     <string name="goto_login">已有账号，前去登录</string>
     <!-- 主界面 -->

@@ -2,10 +2,6 @@ package edu.xcu.easykeep.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,76 +10,67 @@ import edu.xcu.easykeep.bean.UserBean;
 import edu.xcu.easykeep.databinding.ActivityRegisterBinding;
 import edu.xcu.easykeep.db.UserDBManger;
 
+/**
+ * 注册界面 Activity
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding binding;
+    private UserDBManger userDBManger;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        final EditText etRegisterUid = binding.etRegisterUid;
-        final EditText etRegisterPass = binding.etRegisterPass;
-        final EditText etCheckPass = binding.etCheckPass;
-        ImageView ivWarn = binding.ivWarn;
-        Button btnGotoLogin = binding.btnGotoLogin;
-        Button btnRegister = binding.btnRegister;
+        // 初始化数据库管理类
+        userDBManger = new UserDBManger(this);
 
-        /*
-         * 为注册按钮设置点击事件，检查用户信息并创建账号
-         * */
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserDBManger userDBManger = new UserDBManger(getApplicationContext());
+        // 设置注册按钮点击事件
+        binding.btnRegister.setOnClickListener(v -> handleRegisterButtonClick());
 
-                final String upassword = etRegisterPass.getText().toString();
-                final String checkPass = etCheckPass.getText().toString();
-                final String uid = etRegisterUid.getText().toString();
+        // 设置跳转到登录界面按钮点击事件
+        binding.btnGotoLogin.setOnClickListener(v -> goToLoginActivity());
+    }
 
-                if(uid.isEmpty() || upassword.isEmpty()){
-                    Toast.makeText(getApplicationContext(),  "请输入账号和密码", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                //检查两次密码是否相同
-                if(!upassword.equals(checkPass)){
-                    etCheckPass.clearFocus();//先清除焦点
-                    ivWarn.setVisibility(View.VISIBLE);
-                    /*
-                    * 设置焦点事件，只有在输入框获得焦点时才会取消警告
-                    * */
-                    etCheckPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                        @Override
-                        public void onFocusChange(View v, boolean hasFocus) {
-                            if(hasFocus){
-                                ivWarn.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-                }
-                else{
-                    int result = userDBManger.userRegister(new UserBean(uid, upassword));
-                    userDBManger.close();
-                    if (result == 1) {
-                        Toast.makeText(getApplicationContext(),  "注册成功", Toast.LENGTH_SHORT).show();
-                    } else if (result == 0) {
-                        Toast.makeText(getApplicationContext(), "用户已存在", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "注册失败，请稍后再试", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
-        /*
-         * 为跳登录按钮设置点击事件，跳转到登录界面
-         * */
-        btnGotoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+    /**
+     * 处理注册按钮点击事件
+     */
+    private void handleRegisterButtonClick() {
+        // 获取用户输入的账号和密码
+        String uid = binding.etRegisterUid.getText().toString().trim();
+        String upassword = binding.etRegisterPass.getText().toString().trim();
+
+        // 校验输入是否为空
+        if (uid.isEmpty() || upassword.isEmpty()) {
+            Toast.makeText(this, "请输入账号和密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 注册用户
+        int result = userDBManger.userRegister(new UserBean(uid, upassword));
+
+        // 根据注册结果显示提示信息
+        switch (result) {
+            case 1:
+                Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+                goToLoginActivity(); // 注册成功后跳转到登录界面
+                break;
+            case 0:
+                Toast.makeText(this, "用户已存在", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this, "注册失败，请稍后再试", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    /**
+     * 跳转到登录界面
+     */
+    private void goToLoginActivity() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish(); // 关闭当前 Activity
     }
 }

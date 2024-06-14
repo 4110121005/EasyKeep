@@ -19,6 +19,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.Objects;
 
+import edu.xcu.easykeep.EasyKeepApp;
 import edu.xcu.easykeep.activity.LoginActivity;
 import edu.xcu.easykeep.activity.MainActivity;
 import edu.xcu.easykeep.databinding.FragmentSettingBinding;
@@ -26,8 +27,6 @@ import edu.xcu.easykeep.databinding.FragmentSettingBinding;
 public class SettingFragment extends Fragment {
 
     private FragmentSettingBinding binding;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,11 +46,11 @@ public class SettingFragment extends Fragment {
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferences = requireActivity().getSharedPreferences(LoginActivity.data, Context.MODE_PRIVATE);
-                editor = sharedPreferences.edit();
+                EasyKeepApp app = (EasyKeepApp) requireActivity().getApplicationContext();
+                SharedPreferences.Editor editor = app.getSharedPreferences().edit();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 editor.clear();//清空登录记录
-                editor.commit();
+                editor.apply();
                 startActivity(intent);
             }
         });
