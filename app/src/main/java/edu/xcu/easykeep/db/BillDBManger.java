@@ -3,11 +3,15 @@ package edu.xcu.easykeep.db;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import java.util.ArrayList;
 
+import edu.xcu.easykeep.EasyKeepApp;
 import edu.xcu.easykeep.bean.BillBean;
 
 /**
@@ -15,6 +19,7 @@ import edu.xcu.easykeep.bean.BillBean;
  */
 public class BillDBManger {
     private final SQLiteDatabase db;
+    private final String uid; // 当前用户的ID
 
     /**
      * 构造函数
@@ -24,6 +29,10 @@ public class BillDBManger {
     public BillDBManger(Context context) {
         DBHelper dbHelper = DBHelper.getInstance(context);
         db = dbHelper.getWritableDatabase();
+
+        // 获取当前用户的ID
+        EasyKeepApp app = (EasyKeepApp) context.getApplicationContext();
+        uid = app.getSharedPreferences().getString("uid", null);
     }
 
     /**
@@ -33,6 +42,7 @@ public class BillDBManger {
      */
     public void insertBill(BillBean bill) {
         ContentValues values = new ContentValues();
+        values.put("uid", uid); // 保存用户ID
         values.put("name", bill.getName());
         values.put("note", bill.getNote());
         values.put("money", bill.getMoney());
@@ -46,17 +56,16 @@ public class BillDBManger {
     }
 
     /**
-     * 查询所有账单
+     * 查询所有账单 (仅限当前用户)
      *
      * @return 所有账单列表
      */
     public ArrayList<BillBean> selectAllBill() {
         ArrayList<BillBean> list = new ArrayList<>();
 
-        String sql = "select * from bill";
-        Cursor cursor = db.rawQuery(sql, null);
+        String sql = "select * from bill where uid = ? ORDER BY year DESC, month DESC, day DESC, time DESC";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid});
 
-        // 遍历符合要求的每一行数据
         while (cursor.moveToNext()) {
             @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
             @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -75,8 +84,9 @@ public class BillDBManger {
         return list;
     }
 
+
     /**
-     * 查询某一天的所有账单
+     * 查询某一天的所有账单 (仅限当前用户)
      *
      * @param year  年份
      * @param month 月份
@@ -86,10 +96,9 @@ public class BillDBManger {
     public ArrayList<BillBean> selectBillListByDay(int year, int month, int day) {
         ArrayList<BillBean> list = new ArrayList<>();
 
-        String sql = "select * from bill where year = ? and month= ? and day= ? order by id desc";
-        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + "", day + ""});
+        String sql = "select * from bill where uid = ? and year = ? and month = ? and day = ? order by id desc";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid, year + "", month + "", day + ""});
 
-        // 遍历符合要求的每一行数据
         while (cursor.moveToNext()) {
             @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
             @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -105,8 +114,9 @@ public class BillDBManger {
         return list;
     }
 
+
     /**
-     * 获取某一天的支出或收入总金额
+     * 获取某一天的支出或收入总金额 (仅限当前用户)
      *
      * @param year  年份
      * @param month 月份
@@ -117,9 +127,8 @@ public class BillDBManger {
     @SuppressLint("Range")
     public float selectSumMoneyByDay(int year, int month, int day, int kind) {
         float sum = 0.0f;
-        String sql = "select sum(money) from bill where year = ? and month = ? and day = ? and kind = ?";
-        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + "", day + "", kind + ""});
-        // 遍历
+        String sql = "select sum(money) from bill where uid = ? and year = ? and month = ? and day = ? and kind = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid, year + "", month + "", day + "", kind + ""});
         if (cursor.moveToFirst()) {
             sum = cursor.getFloat(cursor.getColumnIndex("sum(money)"));
         }
@@ -128,7 +137,7 @@ public class BillDBManger {
     }
 
     /**
-     * 获取某一月的支出或收入总金额
+     * 获取某一月的支出或收入总金额 (仅限当前用户)
      *
      * @param year  年份
      * @param month 月份
@@ -138,9 +147,8 @@ public class BillDBManger {
     @SuppressLint("Range")
     public float selectSumMoneyByMonth(int year, int month, int kind) {
         float sum = 0.0f;
-        String sql = "select sum(money) from bill where year = ? and month = ? and kind = ?";
-        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + "", kind + ""});
-        // 遍历
+        String sql = "select sum(money) from bill where uid = ? and year = ? and month = ? and kind = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid, year + "", month + "", kind + ""});
         if (cursor.moveToFirst()) {
             sum = cursor.getFloat(cursor.getColumnIndex("sum(money)"));
         }
@@ -149,7 +157,7 @@ public class BillDBManger {
     }
 
     /**
-     * 统计某月份支出或收入的记录条数
+     * 统计某月份支出或收入的记录条数 (仅限当前用户)
      *
      * @param year  年份
      * @param month 月份
@@ -159,8 +167,8 @@ public class BillDBManger {
     @SuppressLint("Range")
     public int selectSumBillByMonth(int year, int month, int kind) {
         int sum = 0;
-        String sql = "select count(money) from bill where year = ? and month = ? and kind = ?";
-        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + "", kind + ""});
+        String sql = "select count(money) from bill where uid = ? and year = ? and month = ? and kind = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid, year + "", month + "", kind + ""});
         if (cursor.moveToFirst()) {
             sum = cursor.getInt(cursor.getColumnIndex("count(money)"));
         }
@@ -169,7 +177,7 @@ public class BillDBManger {
     }
 
     /**
-     * 获取某一年的支出或收入总金额
+     * 获取某一年的支出或收入总金额 (仅限当前用户)
      *
      * @param year 年份
      * @param kind 收入或支出类型，-1 表示支出，1 表示收入
@@ -178,9 +186,8 @@ public class BillDBManger {
     @SuppressLint("Range")
     public float selectSumMoneyByYear(int year, int kind) {
         float sum = 0.0f;
-        String sql = "select sum(money) from bill where year = ? and kind = ?";
-        Cursor cursor = db.rawQuery(sql, new String[]{year + "", kind + ""});
-        // 遍历
+        String sql = "select sum(money) from bill where uid = ? and year = ? and kind = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid, year + "", kind + ""});
         if (cursor.moveToFirst()) {
             sum = cursor.getFloat(cursor.getColumnIndex("sum(money)"));
         }
@@ -189,25 +196,25 @@ public class BillDBManger {
     }
 
     /**
-     * 根据 ID 删除账单记录
+     * 根据 ID 删除账单记录 (仅限当前用户)
      *
      * @param id 账单记录 ID
      * @return 删除的行数
      */
     public int deleteBillById(int id) {
-        return db.delete("bill", "id = ?", new String[]{id + ""});
+        return db.delete("bill", "uid = ? and id = ?", new String[]{uid, id + ""});
     }
 
     /**
-     * 根据备注搜索账单列表
+     * 根据备注搜索账单列表 (仅限当前用户)
      *
      * @param nt 备注关键词
      * @return 包含备注关键词的账单列表
      */
     public ArrayList<BillBean> selectBillListByNote(String nt) {
         ArrayList<BillBean> list = new ArrayList<>();
-        String sql = "select * from bill where note like '%" + nt + "%'";
-        Cursor cursor = db.rawQuery(sql, null);
+        String sql = "select * from bill where uid = ? and note like ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid, "%" + nt + "%"});
         while (cursor.moveToNext()) {
             @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
             @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -227,7 +234,7 @@ public class BillDBManger {
     }
 
     /**
-     * 获取某一月的所有支出或收入记录
+     * 获取某一月的所有支出或收入记录 (仅限当前用户)
      *
      * @param year  年份
      * @param month 月份
@@ -235,9 +242,8 @@ public class BillDBManger {
      */
     public ArrayList<BillBean> selectBillListByMonth(int year, int month) {
         ArrayList<BillBean> list = new ArrayList<>();
-        String sql = "select * from bill where year = ? and month = ? order by id desc";
-        Cursor cursor = db.rawQuery(sql, new String[]{year + "", month + ""});
-        // 遍历符合要求的每一行数据
+        String sql = "select * from bill where uid = ? and year = ? and month = ? order by id desc";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid, year + "", month + ""});
         while (cursor.moveToNext()) {
             @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("id"));
             @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -255,14 +261,14 @@ public class BillDBManger {
     }
 
     /**
-     * 查询记账表中的年份信息
+     * 查询记账表中的年份信息 (仅限当前用户)
      *
      * @return 年份列表
      */
     public ArrayList<Integer> selectYearList() {
         ArrayList<Integer> list = new ArrayList<>();
-        String sql = "select distinct(year) from bill order by year asc";
-        Cursor cursor = db.rawQuery(sql, null);
+        String sql = "select distinct(year) from bill where uid = ? order by year asc";
+        Cursor cursor = db.rawQuery(sql, new String[]{uid});
         while (cursor.moveToNext()) {
             @SuppressLint("Range") int year = cursor.getInt(cursor.getColumnIndex("year"));
             list.add(year);
@@ -272,11 +278,19 @@ public class BillDBManger {
     }
 
     /**
-     * 删除账单表中的所有数据
+     * 删除所有账单记录 (仅限当前用户)
+     *
+     * @return 删除的行数
      */
-    public void deleteAllBill() {
-        String sql = "delete from bill";
-        db.execSQL(sql);
+    public int deleteAllBill() {
+        return db.delete("bill", "uid = ?", new String[]{uid});
     }
+
+    //operate 格式如：INSERT_BILL、DELETE_BILL
+    public void billUpdateBroadcast(Context context, String operate){
+        Intent intent = new Intent(operate);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
 }
 

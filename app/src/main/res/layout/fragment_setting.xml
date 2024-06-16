@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- 设置界面——主界面的第3个子界面 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context=".ui.setting.SettingFragment">
+    tools:context=".ui.SettingFragment">
 
     <TextView
         android:id="@+id/tv_setting"
@@ -45,59 +47,9 @@
         app:layout_constraintTop_toBottomOf="@id/tv_setting">
 
         <!-- 记账日报 -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:background="@color/white"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_1"
-                android:textSize="18sp"
-                tools:ignore="RelativeOverlap" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switch_daily"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:checked="true" />
-        </RelativeLayout>
         <!-- 记账月报 -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="@color/white"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_2"
-                android:textSize="18sp"
-                tools:ignore="RelativeOverlap" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switch_monthly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:checked="true" />
-
-        </RelativeLayout>
 
         <!-- 提示文本 -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/text_attention"
-            android:textSize="14sp" />
 
         <!-- 推荐给朋友 -->
         <RelativeLayout
@@ -154,7 +106,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_advice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- 账单明细界面——主界面的第1个子界面 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +22,7 @@
     <ListView
         android:id="@+id/bill_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@color/white"
         android:fadeScrollbars="true"
@@ -28,6 +30,5 @@
         android:scrollbarAlwaysDrawVerticalTrack="false"
         android:scrollbarSize="2dp"
         android:scrollbarStyle="outsideOverlay" />
-
 
 </LinearLayout>

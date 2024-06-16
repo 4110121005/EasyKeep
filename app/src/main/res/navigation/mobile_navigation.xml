@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- 底部导航栏的导航——映射子界面和导航栏 -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,18 +9,18 @@
 
     <fragment
         android:id="@+id/navigation_bill"
-        android:name="edu.xcu.easykeep.ui.bill.BillFragment"
+        android:name="edu.xcu.easykeep.ui.BillFragment"
         android:label="@string/title_bill"
         tools:layout="@layout/fragment_bill" />
 
     <fragment
         android:id="@+id/navigation_add"
-        android:name="edu.xcu.easykeep.ui.add.AddFragment"
-        tools:layout="@layout/fragment_add" />
+        android:name="edu.xcu.easykeep.ui.RecordFragment"
+        tools:layout="@layout/fragment_record" />
 
     <fragment
         android:id="@+id/navigation_setting"
-        android:name="edu.xcu.easykeep.ui.setting.SettingFragment"
+        android:name="edu.xcu.easykeep.ui.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

@@ -16,4 +16,6 @@
     <color name="green">#3EB575</color>
     <!--蓝色-->
     <color name="blue">#4D6F96</color>
+    <!-- 灰色 -->
+    <color name="grey">#f3f3f3</color>
 </resources>

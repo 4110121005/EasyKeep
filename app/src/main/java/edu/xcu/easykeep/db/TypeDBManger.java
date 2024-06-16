@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 
 import edu.xcu.easykeep.bean.TypeBean;
@@ -35,8 +36,8 @@ public class TypeDBManger {
         ArrayList<TypeBean> list = new ArrayList<>();
 
         // 读取 type 表中 kind 类型的数据
-        String sql = "select * from type where kind = " + kind;
-        Cursor cursor = db.rawQuery(sql, null);
+        String sql = "select * from type where kind = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{kind + ""});
 
         // 循环读取游标内容，存储到对象当中
         while (cursor.moveToNext()) {
@@ -49,8 +50,6 @@ public class TypeDBManger {
             list.add(typeBean);
         }
         cursor.close();
-        // 添加通用的类型
-        list.addAll(getTypeListByKind(0));
         return list;
     }
 
@@ -64,8 +63,8 @@ public class TypeDBManger {
     public int getSelectedByName(String name) {
         int selected = 0;
 
-        String sql = "select selected from type where name = " + name;
-        Cursor cursor = db.rawQuery(sql, null);
+        String sql = "select selected from type where name = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{name});
 
         if (cursor.moveToNext()) {
             selected = cursor.getInt(cursor.getColumnIndex("selected"));

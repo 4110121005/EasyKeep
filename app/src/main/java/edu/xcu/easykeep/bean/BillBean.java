@@ -1,7 +1,7 @@
 package edu.xcu.easykeep.bean;
 
 /**
- * 账单数据模型，用于存储账单相关信息。
+ * 账单数据模型，用于存储账单相关信息（不包含用户 uid）。
  */
 public class BillBean {
 
@@ -49,6 +49,13 @@ public class BillBean {
      * 账单类型，1 表示收入，-1 表示支出。
      */
     private int kind;
+
+    /**
+     * 无参构造函数。
+     */
+    public BillBean(){
+
+    }
 
     /**
      * 构造函数，用于创建 BillBean 对象。

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 底部导航栏的菜单 xml文件，文字和图片都写在这个里面-->
+
+<!-- 底部导航栏的菜单布局，文字和图片都写在这个里面-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item

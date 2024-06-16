@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
             NavigationUI.setupWithNavController(navView, navController);
         }
 
-        Intent intent = getIntent();
-        uid = intent.getStringExtra("uid");
     }
 
 }

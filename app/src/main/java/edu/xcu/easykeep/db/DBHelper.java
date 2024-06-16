@@ -228,8 +228,13 @@ public class DBHelper extends SQLiteOpenHelper {
     private void insertType(SQLiteDatabase db) {
         String sql = "insert into type(name, imageId, selected, kind) values (?, ?, ?, ?)";
 
+        // 收入或支出
+        db.execSQL(sql, new Object[]{"其他", R.drawable.ic_type_rests, R.drawable.ic_type_rests_green, 0});
+        db.execSQL(sql, new Object[]{"理财", R.drawable.ic_type_management, R.drawable.ic_type_management_green, 0});
+        db.execSQL(sql, new Object[]{"人情往来", R.drawable.ic_type_relation, R.drawable.ic_type_relation_green, 0});
+
         // 支出
-        db.execSQL(sql, new Object[]{"飞来横祸，嘤嘤嘤", R.drawable.ic_type_angry, R.drawable.ic_type_angry_green, -1});
+        db.execSQL(sql, new Object[]{"飞来横祸", R.drawable.ic_type_angry, R.drawable.ic_type_angry_green, -1});
         db.execSQL(sql, new Object[]{"餐饮", R.drawable.ic_type_catering, R.drawable.ic_type_catering_green, -1});
         db.execSQL(sql, new Object[]{"交通", R.drawable.ic_type_traffic, R.drawable.ic_type_traffic_green, -1});
         db.execSQL(sql, new Object[]{"服饰", R.drawable.ic_type_clothes, R.drawable.ic_type_clothes_green, -1});
@@ -246,14 +251,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql, new Object[]{"公益", R.drawable.ic_type_public, R.drawable.ic_type_public_green, -1});
 
         // 收入
-        db.execSQL(sql, new Object[]{"天降横财，鹅鹅鹅", R.drawable.ic_type_happy, R.drawable.ic_type_happy_green, 1});
+        db.execSQL(sql, new Object[]{"天降横财", R.drawable.ic_type_happy, R.drawable.ic_type_happy_green, 1});
         db.execSQL(sql, new Object[]{"交易", R.drawable.ic_type_transaction, R.drawable.ic_type_transaction_green, 1});
         db.execSQL(sql, new Object[]{"工资", R.drawable.ic_type_salary, R.drawable.ic_type_salary_green, 1});
         db.execSQL(sql, new Object[]{"奖金", R.drawable.ic_type_bonus, R.drawable.ic_type_bonus_green, 1});
-
-        // 收入或支出
-        db.execSQL(sql, new Object[]{"其他", R.drawable.ic_type_rests, R.drawable.ic_type_rests_green, 0});
-        db.execSQL(sql, new Object[]{"理财", R.drawable.ic_type_management, R.drawable.ic_type_management_green, 0});
-        db.execSQL(sql, new Object[]{"人情往来", R.drawable.ic_type_relation, R.drawable.ic_type_relation_green, 0});
     }
 }

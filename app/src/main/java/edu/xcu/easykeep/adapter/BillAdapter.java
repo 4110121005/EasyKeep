@@ -13,17 +13,17 @@ import java.util.List;
 import java.util.Locale;
 
 import edu.xcu.easykeep.R;
-import edu.xcu.easykeep.bean.ItemBean;
+import edu.xcu.easykeep.bean.ItemBill;
 
 /**
  * 用于展示账单列表的适配器
  */
-public class ItemAdapter extends BaseAdapter {
+public class BillAdapter extends BaseAdapter {
 
     /**
      * 账单数据列表
      */
-    private final List<ItemBean> itemList;
+    private final List<ItemBill> itemList;
     /**
      * 上下文对象
      */
@@ -48,7 +48,7 @@ public class ItemAdapter extends BaseAdapter {
      * @param itemList 账单数据列表
      * @param context  上下文对象
      */
-    public ItemAdapter(List<ItemBean> itemList, Context context) {
+    public BillAdapter(List<ItemBill> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
         // 获取当前日期
@@ -101,7 +101,7 @@ public class ItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        //复用 convertView
+        // 复用 convertView
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_bill, parent, false);
             viewHolder = new ViewHolder(convertView);
@@ -109,7 +109,8 @@ public class ItemAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ItemBean item = itemList.get(position);//获取当前item的数据
+        ItemBill item = itemList.get(position); // 获取当前item的数据
+
         viewHolder.iv_item_image.setImageResource(item.getSelected());
         viewHolder.tv_item_name.setText(item.getName());
         viewHolder.tv_item_note.setText(item.getNote());
@@ -127,7 +128,7 @@ public class ItemAdapter extends BaseAdapter {
     /**
      * ViewHolder类，用于缓存列表项视图中的控件
      */
-    public static class ViewHolder {
+    private static class ViewHolder {
         ImageView iv_item_image;
         TextView tv_item_name;
         TextView tv_item_note;

@@ -30,4 +30,13 @@
     <string name="text_clear">清空记录</string>
     <string name="clear_logo_description">清空</string>
     <string name="text_advice">反馈和建议</string>
+    <!--记账界面 -->
+        <!-- 备注-->
+        <string name="title_note">添加备注</string>
+    <!--日历对话框-->
+    <string name="date_separete">:</string>
+    <string name="date_input_hint">请输入时间（24小时制）</string>
+
+    <string name="cancel">取消</string>
+    <string name="ensure">确定</string>
 </resources>
