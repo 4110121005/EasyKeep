@@ -200,11 +200,16 @@ public class DBHelper extends SQLiteOpenHelper {
             int nameIndex = random.nextInt(names.length);
             int noteIndex = random.nextInt(notes.length);
             int kind = kinds[nameIndex];
-            float money = random.nextFloat() * 100;
+            float money = random.nextFloat() * 100 * (kind == -1 ? -1 : 1);
 
             calendar.add(Calendar.DAY_OF_MONTH, random.nextInt(3)); // 随机增加1-3天
 
-            @SuppressLint("DefaultLocale") String time = String.format("%d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+            // 生成随机小时和分钟
+            int hour = random.nextInt(24);
+            int minute = random.nextInt(60);
+
+            @SuppressLint("DefaultLocale")
+            String time = String.format("%02d:%02d", hour, minute);
 
             db.execSQL(sql, new Object[]{
                     "0",
@@ -219,6 +224,7 @@ public class DBHelper extends SQLiteOpenHelper {
             });
         }
     }
+
 
     /**
      * 向类型表插入初始类型数据

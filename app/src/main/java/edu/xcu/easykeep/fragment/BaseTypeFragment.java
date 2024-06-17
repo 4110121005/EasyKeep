@@ -1,19 +1,12 @@
 package edu.xcu.easykeep.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import edu.xcu.easykeep.Dialog.CalendarDialog;
 import edu.xcu.easykeep.Dialog.NoteDialog;
@@ -150,6 +142,19 @@ public abstract class BaseTypeFragment extends Fragment {
     }
 
     /**
+     *  获取输入的账单金额
+     * @return 返回输入框的金额，没有输入时，返回null。
+     */
+    public Float getInputMoney(){
+        String m = binding.etMoney.getText().toString();
+        if(m.isEmpty()){
+           return null;
+        }else {
+            return Float.parseFloat(m);
+        }
+    }
+
+    /**
      *  弹出日期选择对话框
      */
     public void showCalendarDialog(){
@@ -159,7 +164,9 @@ public abstract class BaseTypeFragment extends Fragment {
         calendarDialog.setOnEnsureListener(new CalendarDialog.OnEnsureListener() {
             @Override
             public void onEnsure(String time, int year, int month, int day) {
-                binding.tvRecordTime.setText(time);
+                // 拼接时间字符串
+                String dateFormat = year + "年" + month + "月" + day + "日 " + time;
+                binding.tvRecordTime.setText(dateFormat);
                 bill.setTime(time);
                 bill.setYear(year);
                 bill.setMonth(month);
@@ -170,7 +177,7 @@ public abstract class BaseTypeFragment extends Fragment {
 
     /**
      *  获取当前日期
-     * @return 当前日期字符串
+     * @return 当前日期字符串，yyyy年MM月dd日 HH:mm
      */
     public String getCurrentDate() {
         Date date = new Date();
@@ -191,15 +198,7 @@ public abstract class BaseTypeFragment extends Fragment {
         bill.setDay(day);
 
         binding.tvRecordTime.setText(getCurrentDate());
-        bill.setTime(binding.tvRecordTime.getText().toString());
-    }
-
-    public void successAddDialog(Context context){
-        AlertDialog dialog;
-        AlertDialog.Builder builder = new AlertDialog.Builder(context)
-                .setTitle("添加成功！");
-        dialog = builder.create();
-        dialog.show();;
+        bill.setTime(binding.tvRecordTime.getText().toString().split(" ")[1]);
     }
     @Override
     public void onDestroyView() {

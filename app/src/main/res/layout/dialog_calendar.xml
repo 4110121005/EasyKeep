@@ -15,6 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -26,16 +27,16 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_gravity="end"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp">
 
             <EditText
                 android:id="@+id/et_hour"
-                android:layout_width="60dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textAlignment="center" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,9 +49,10 @@
 
             <EditText
                 android:id="@+id/et_minute"
-                android:layout_width="60dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textAlignment="center" />
         </LinearLayout>
     </LinearLayout>
 

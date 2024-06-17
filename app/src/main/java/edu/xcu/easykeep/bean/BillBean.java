@@ -75,7 +75,7 @@ public class BillBean {
         this.name = name;
         this.note = note;
         this.money = money;
-        this.time = time;
+        this.time = time; // 存储格式为 hour:minute
         this.year = year;
         this.month = month;
         this.day = day;

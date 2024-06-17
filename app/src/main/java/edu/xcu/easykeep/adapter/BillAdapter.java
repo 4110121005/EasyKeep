@@ -1,5 +1,6 @@
 package edu.xcu.easykeep.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,9 +119,11 @@ public class BillAdapter extends BaseAdapter {
 
         // 判断日期是否为今天，如果是则显示“今天 XX:XX”格式，否则显示完整日期时间
         if (item.getYear() == currentYear && item.getMonth() == currentMonth && item.getDay() == currentDay) {
-            viewHolder.tv_item_date.setText(String.format("今天 %s", item.getTime().split(" ")[1]));
+            viewHolder.tv_item_date.setText(String.format("今天 %s", item.getTime()));
         } else {
-            viewHolder.tv_item_date.setText(item.getTime());
+            @SuppressLint("DefaultLocale") String dateFormat = String.format("%d-%02d-%02d %s", item.getYear(), item.getMonth(), item.getDay(), item.getTime());
+            viewHolder.tv_item_date.setText(dateFormat);
+
         }
         return convertView;
     }

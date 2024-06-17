@@ -285,12 +285,5 @@ public class BillDBManger {
     public int deleteAllBill() {
         return db.delete("bill", "uid = ?", new String[]{uid});
     }
-
-    //operate 格式如：INSERT_BILL、DELETE_BILL
-    public void billUpdateBroadcast(Context context, String operate){
-        Intent intent = new Intent(operate);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-    }
-
 }
 

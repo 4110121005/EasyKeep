@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -96,11 +97,11 @@ public class CalendarDialog extends Dialog {
         minuteStr = String.format("%02d", minute);
 
         // 拼接时间字符串
-        String timeFormat = year + "年" + monthStr + "月" + dayStr + "日 " + hourStr + ":" + minuteStr;
+        String time = hourStr + ":" + minuteStr;
 
         // 回调监听器
         if (onEnsureListener != null) {
-            onEnsureListener.onEnsure(timeFormat, year, month, dayOfMonth);
+            onEnsureListener.onEnsure(time, year, month, dayOfMonth);
         }
 
         // 关闭对话框

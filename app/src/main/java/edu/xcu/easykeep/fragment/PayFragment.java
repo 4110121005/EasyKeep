@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import edu.xcu.easykeep.bean.TypeBean;
 import edu.xcu.easykeep.db.BillDBManger;
 import edu.xcu.easykeep.db.TypeDBManger;
+import edu.xcu.easykeep.utils.SimpleDialog;
 
 public class PayFragment extends BaseTypeFragment {
+    @Override
     public ArrayList<TypeBean> getAllItem() {
         typeDBManger = new TypeDBManger(getContext());
         ArrayList<TypeBean> list = typeDBManger.getTypeListByKind(0);
@@ -17,12 +19,15 @@ public class PayFragment extends BaseTypeFragment {
     @Override
     public void saveBillTODB() {
         bill.setKind(-1);
-        bill.setMoney(Float.parseFloat(binding.etMoney.getText().toString()));
+        Float money = getInputMoney();
+        if(money == null){
+            SimpleDialog.showHintDialog(getContext(), "请输入金额！");
+            return;
+        }
+        bill.setMoney(money*-1);
         BillDBManger billDBManger = new BillDBManger(getContext());
         billDBManger.insertBill(bill);
-        billDBManger.billUpdateBroadcast(getContext(), "BILL_INSERT");
-        successAddDialog(getContext());
+        SimpleDialog.showHintDialog(getContext(), "添加成功！");
     }
-
 }
 

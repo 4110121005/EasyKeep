@@ -1,13 +1,16 @@
 package edu.xcu.easykeep.ui;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -31,18 +34,10 @@ public class BillFragment extends Fragment {
     BillAdapter billAdapter;
     ArrayList<ItemBill> itemList;
     BillDBManger billDBManger;
-    BroadcastReceiver billInsertReceiver;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         // 设置广播
         super.onCreate(savedInstanceState);
-        billInsertReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // 收到广播，更新 ListView 数据
-                billAdapter.notifyDataSetChanged();
-            }
-        };
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,6 +52,38 @@ public class BillFragment extends Fragment {
 
         listView.setAdapter(billAdapter);
 
+        //添加列表项长按事件
+        binding.billList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // 创建数据库管理对象
+                BillDBManger billDBManger = new BillDBManger(getContext());
+
+                // 创建确认对话框
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                        .setMessage("确定要删除这条账单吗？")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 删除账单数据
+                                billDBManger.deleteBillById(itemList.get(position).getId());
+                                itemList.remove(position);
+                                billAdapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                return false;
+            }
+        });
+
         return root;
     }
     private ArrayList<ItemBill> getAllItem() {
@@ -65,22 +92,6 @@ public class BillFragment extends Fragment {
         return ItemBill.convertToItemList(billList, new TypeDBManger(getContext()));
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // 注册广播接收器
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(billInsertReceiver,
-                new IntentFilter("INSERT_BILL"));
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(billInsertReceiver,
-                new IntentFilter("DELETE_BILL"));
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // 取消注册广播接收器
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(billInsertReceiver);
-    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

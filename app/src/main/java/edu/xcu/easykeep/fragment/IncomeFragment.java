@@ -1,13 +1,11 @@
 package edu.xcu.easykeep.fragment;
 
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
-import edu.xcu.easykeep.bean.BillBean;
 import edu.xcu.easykeep.bean.TypeBean;
 import edu.xcu.easykeep.db.BillDBManger;
 import edu.xcu.easykeep.db.TypeDBManger;
+import edu.xcu.easykeep.utils.SimpleDialog;
 
 public class IncomeFragment extends BaseTypeFragment {
 
@@ -22,10 +20,14 @@ public class IncomeFragment extends BaseTypeFragment {
     @Override
     public void saveBillTODB() {
         bill.setKind(1);
-        bill.setMoney(Float.parseFloat(binding.etMoney.getText().toString()));
+        Float money = getInputMoney();
+        if(money == null){
+            SimpleDialog.showHintDialog(getContext(), "请输入金额！");
+            return;
+        }
+        bill.setMoney(money);
         BillDBManger billDBManger = new BillDBManger(getContext());
         billDBManger.insertBill(bill);
-        billDBManger.billUpdateBroadcast(getContext(), "BILL_INSERT");
-        successAddDialog(getContext());
+        SimpleDialog.showHintDialog(getContext(), "添加成功！");
     }
 }
